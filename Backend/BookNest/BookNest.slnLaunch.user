@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "New Profile",
+    "Projects": [
+      {
+        "Path": "BookNest.Product.WebApi\\BookNest.Book.WebApi.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "BookNest.Book.AuthApi\\BookNest.Book.AuthApi.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]

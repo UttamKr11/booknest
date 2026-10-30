@@ -1,0 +1,6 @@
+@BookNest.Book.AuthApi_HostAddress = http://localhost:5107
+
+GET {{BookNest.Book.AuthApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

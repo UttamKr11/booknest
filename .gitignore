@@ -21,3 +21,8 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+/Backend/BookNest/BookNest.Book.AuthApi/bin/Debug/net9.0
+/Backend/BookNest/.vs
+/Backend/BookNest/BookNest.Book.AuthApi/obj
+/Backend/BookNest/BookNest.Product.WebApi/bin/Debug/net9.0
+/Backend/BookNest/BookNest.Product.WebApi/obj
