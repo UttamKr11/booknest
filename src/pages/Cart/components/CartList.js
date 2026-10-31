@@ -1,21 +1,30 @@
+import { UseCart } from "../../../context/CartContext"
+import { CartCard } from "./CartCard"
+
 export const CartList = () => {
+  const { cartList, total } = UseCart()
   return (
     <>
       <section>
         <p className="text-2xl text-center font-semibold dark:text-slate-100 my-10 underline underline-offset-8">
-          My Cart (2)
+          My Cart ({cartList.length})
         </p>
       </section>
-      
+
       <section>
-        {/* Cart Cards */}
+        {
+          cartList.map((cartItem, key) => (
+            <CartCard cartItem={cartItem} key={key} />
+          ))
+        }
+
       </section>
 
       <section className="max-w-4xl m-auto">
         <div className="flex flex-col p-2 border-b dark:border-slate-700 text-lg dark:text-slate-100">
           <p className="flex justify-between my-2">
             <span className="font-semibold">Total Amount:</span>
-            <span>$99</span>
+            <span>${total}</span>
           </p>
         </div>
         <div className="text-right my-5">

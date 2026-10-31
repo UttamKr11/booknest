@@ -1,11 +1,12 @@
 import { AuthResponseHandler } from '../util/AuthResponseHandler'
 import { useNavigate } from 'react-router-dom';
 import { useRef } from 'react';
-
+import { UseAuthInfo } from '../context/AuthContext'
 export const Login = () => {
   const navigate = useNavigate();
   const email = useRef();
   const password = useRef();
+  const { setUserName } = UseAuthInfo();
   const handleLogin = async (event) => {
     event.preventDefault();
     const authDetail =
@@ -27,8 +28,9 @@ export const Login = () => {
       AuthResponseHandler(response);
     }
     else if (response.ok) {
-      const isPasses = AuthResponseHandler(response);
+      const isPasses = await AuthResponseHandler(response);
       if (isPasses) {
+        setUserName(sessionStorage.getItem("name") || "");
         navigate("/products");
       }
     }

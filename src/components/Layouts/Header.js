@@ -3,9 +3,14 @@ import { DropdownLoggedIn } from '../Elements/DropdownLoggedIn'
 import { DropdownLoggedOut } from '../Elements/DropdownLoggedOut'
 import logo from '../../assets/images/logo.png';
 import { useState } from 'react';
+import { UseCart } from '../../context/CartContext';
+import { UseAuthInfo } from '../../context/AuthContext';
 export const Header = () => {
     const [dropdown, setDropdown] = useState(false)
     const token = sessionStorage.getItem("access_token");
+    const { cartList } = UseCart();
+    const { userName } = UseAuthInfo();
+
     return (
         <header>
             <nav className="bg-white dark:bg-gray-900">
@@ -15,11 +20,10 @@ export const Header = () => {
                         <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">BookNest</span>
                     </Link>
                     <div className="flex items-center relative">
-                        <span className="cursor-pointer text-xl text-gray-700 dark:text-white mr-5 bi bi-gear-wide-connected"></span>
-                        <span className="cursor-pointer text-xl text-gray-700 dark:text-white mr-5 bi bi-search"></span>
+                        <span className="mr-5 text-gray-700 dark:text-white">Welcome, {userName || "Guest"}</span>
                         <Link to="/cart" className="text-gray-700 dark:text-white mr-5">
                             <span className="text-2xl bi bi-cart-fill relative">
-                                <span className="text-white text-sm absolute -top-1 left-2.5 bg-rose-500 px-1 rounded-full ">0</span>
+                                <span className="text-white text-sm absolute -top-1 left-2.5 bg-rose-500 px-1 rounded-full ">{cartList.length}</span>
                             </span>
                         </Link>
 

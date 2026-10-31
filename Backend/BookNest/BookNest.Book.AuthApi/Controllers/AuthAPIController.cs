@@ -68,7 +68,14 @@ namespace BookNest.Book.AuthApi.Controllers
             await _userManager.AddToRoleAsync(user, role);
             _responseDto.Result = new LoginResponseDto
             {
-                Token = _jwtTokenGenerator.GenerateToken(user, await _userManager.GetRolesAsync(user))
+                Token = _jwtTokenGenerator.GenerateToken(user, await _userManager.GetRolesAsync(user)),
+                user = new()
+                {
+                    Name = user.Name,
+                    Email = user.Email,
+                    PhoneNumber = user.PhoneNumber
+                }
+
             };
             return Ok(_responseDto);
         }
@@ -85,7 +92,13 @@ namespace BookNest.Book.AuthApi.Controllers
             }
             _responseDto.Result = new LoginResponseDto
             {
-                Token = _jwtTokenGenerator.GenerateToken(user, await _userManager.GetRolesAsync(user))
+                Token = _jwtTokenGenerator.GenerateToken(user, await _userManager.GetRolesAsync(user)),
+                user = new()
+                {
+                    Name = user.Name,
+                    Email = user.Email,
+                    PhoneNumber = user.PhoneNumber
+                }
             };
             return Ok(_responseDto);
         }

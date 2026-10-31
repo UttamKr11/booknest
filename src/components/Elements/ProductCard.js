@@ -1,9 +1,17 @@
 import { Link } from "react-router-dom"
 import { Rating } from "./Rating";
-
+import { UseCart } from "../../context/CartContext"
+import { useEffect, useState } from "react";
 export const ProductCard = ({ book }) => {
 
     const { id, name, overview, price, imageLocal, rating, bestSeller } = book
+    const { addBook, removeFromCart, cartList } = UseCart();
+    const [isBookAdded, setBookAdded] = useState(false);
+
+    useEffect(() => {
+        var bookfound = cartList.some(x => x.id === book.id);
+        setBookAdded(bookfound)
+    }, [cartList, book.id])
 
     return (
         <div className="m-3 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
@@ -29,10 +37,27 @@ export const ProductCard = ({ book }) => {
                     <span className="text-2xl dark:text-gray-200">
                         <span>$</span><span>{price}</span>
                     </span>
-                    <button className="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800">Add To Cart <i className="ml-1 bi bi-plus-lg"></i></button>
-                    {/* <button className="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-red-600 rounded-lg hover:bg-red-800">Remove Item <i className="ml-1 bi bi-trash3"></i></button> */}
+                    {
+                        book.inStock ?
+                            (
+
+                                isBookAdded ?
+                                    (
+                                        <button onClick={() => removeFromCart(book)} className="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-red-600 rounded-lg hover:bg-red-800">Remove Item <i className="ml-1 bi bi-trash3"></i></button>
+
+                                    ) :
+                                    (
+                                        <button onClick={() => addBook(book)} className="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800">Add To Cart <i className="ml-1 bi bi-plus-lg"></i></button>
+
+                                    )
+
+                            )
+                            :
+                            <button onClick={() => addBook(book)} className="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-orange-700 rounded-lg hover:bg-orange-800">Notify me <i className="ml-1 bi bi-envelope"></i></button>
+
+                    }
                 </p>
             </div>
-        </div>
+        </div >
     )
 }

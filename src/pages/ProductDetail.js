@@ -1,11 +1,16 @@
 import { useEffect, useState } from "react";
 import { Rating } from "../components/Elements/Rating"
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useTitle } from '../hooks/useTitle';
+import { UseCart } from "../context/CartContext";
 export const ProductDetail = () => {
 
   const [book, setBook] = useState({});
+  const [isBookAdded, setBookAdded] = useState(false);
   const { id } = useParams();
+
+  const { addBook, removeFromCart, cartList } = UseCart();
+
   useTitle(book.name)
   useEffect(() => {
     async function getBookById() {
@@ -16,6 +21,11 @@ export const ProductDetail = () => {
     getBookById();
 
   }, [id])
+
+  useEffect(() => {
+    var bookfound = cartList.some(x => x.id === book.id);
+    setBookAdded(bookfound)
+  }, [cartList, book.id])
 
   return (
     <main>
@@ -46,10 +56,23 @@ export const ProductDetail = () => {
               }
               <span className="font-semibold text-blue-500 border bg-slate-100 rounded-lg px-3 py-1 mr-2">{book.size} MB</span>
             </p>
-            <p className="my-3">
-              <button className={`inline-flex items-center py-2 px-5 text-lg font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800`}>Add To Cart <i className="ml-1 bi bi-plus-lg"></i></button>
-              {/* <button className={`inline-flex items-center py-2 px-5 text-lg font-medium text-center text-white bg-red-600 rounded-lg hover:bg-red-800`}  disabled={ product.in_stock ? "" : "disabled" }>Remove Item <i className="ml-1 bi bi-trash3"></i></button> */}
-            </p>
+            {
+              book.inStock ?
+                (
+                  <p className="my-3">
+                    {
+                      isBookAdded ? (
+                        <button onClick={() => removeFromCart(book)} className={`inline-flex items-center py-2 px-5 text-lg font-medium text-center text-white bg-red-600 rounded-lg hover:bg-red-800`} >Remove Item <i className="ml-1 bi bi-trash3"></i></button>)
+                        :
+                        (<button onClick={() => addBook(book)} className={`inline-flex items-center py-2 px-5 text-lg font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800`}  >Add To Cart <i className="ml-1 bi bi-plus-lg"></i></button>)
+                    }
+
+                  </p>
+                )
+                :
+                <Link to="/products" type="button" className="inline-flex items-center py-2 px-5 text-lg font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800">Explore in Nest<i className="ml-2 bi bi-book"></i></Link>
+
+            }
             <p className="text-lg text-gray-900 dark:text-slate-200">
               {book.longDescription}
             </p>

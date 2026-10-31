@@ -43,6 +43,7 @@ export const AuthResponseHandler = async (response) => {
         if (data.result.token) {
             sessionStorage.setItem("access_token", data.result.token);
             sessionStorage.setItem("bnid", data.result.token);
+            sessionStorage.setItem("name", data.result.user.name)
             return true;
         }
     }

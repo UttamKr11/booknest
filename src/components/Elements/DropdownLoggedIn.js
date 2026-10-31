@@ -1,9 +1,13 @@
-import { Link } from "react-router-dom"
-
+import { Link, useNavigate } from "react-router-dom"
+import { UseAuthInfo } from '../../context/AuthContext';
 export const DropdownLoggedIn = ({ setDropdown }) => {
+    const { setUserName } = UseAuthInfo();
+    const navigate = useNavigate();
     const handleLogout = () => {
         sessionStorage.clear();
+        setUserName("");
         setDropdown(false);
+        navigate("/login");
     }
     return (
         <div id="dropdownAvatar" className="select-none	absolute top-10 right-0 z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
